@@ -1,0 +1,5 @@
+from classes.#NOME_CLASSE#Parent import #NOME_CLASSE#Parent
+
+class #NOME_CLASSE#(#NOME_CLASSE#Parent):
+    def __init__(self, #LISTA_ATRIBUTOS_CONSTRUTOR#):
+        #INICIALIZACAO#

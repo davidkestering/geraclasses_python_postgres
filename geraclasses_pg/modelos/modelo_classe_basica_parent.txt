@@ -1,0 +1,4 @@
+class #NOME_CLASSE#Parent:
+    def __init__(self, #LISTA_ATRIBUTOS_CONSTRUTOR#):
+        #INICIALIZACAO#
+    #GET_SET#

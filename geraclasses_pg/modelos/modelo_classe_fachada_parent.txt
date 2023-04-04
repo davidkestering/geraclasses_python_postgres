@@ -1,0 +1,14 @@
+from classes.Conexao import Conexao
+#INCLUDE_CLASSES#
+from classes.FachadaSegurancaBD import FachadaSegurancaBD
+import sys
+sys.path.append('../')
+import constantes as ct
+
+oFachadaSeguranca = FachadaSegurancaBD(ct.BANCO)
+
+class Fachada#BANCO#BDParent:
+    def __init__(self, sBanco):
+        self.pConexao = Conexao(sServidor=sBanco)
+
+#INTERIOR_FACHADA#

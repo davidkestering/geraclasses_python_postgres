@@ -1,0 +1,5 @@
+from classes.Fachada#BANCO#BDParent import Fachada#BANCO#BDParent
+
+class Fachada#BANCO#BD(Fachada#BANCO#BDParent):
+    def __init__(self, sBanco):
+        self.pConexao = Fachada#BANCO#BDParent(sBanco=sBanco)

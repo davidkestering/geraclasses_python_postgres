@@ -1,0 +1,5 @@
+from classes.#NOME_CLASSE#BDParent import #NOME_CLASSE#BDParent
+
+class #NOME_CLASSE#BD(#NOME_CLASSE#BDParent):
+    def __init__(self, sBanco):
+        self.pConexao = #NOME_CLASSE#BDParent(sBanco=sBanco)

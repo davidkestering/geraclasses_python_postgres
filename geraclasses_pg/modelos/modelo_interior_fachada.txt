@@ -1,0 +1,75 @@
+    def inicializa#NOME_CLASSE#(self,#LISTA_ATRIBUTOS_CONSTRUTOR#):
+        o#NOME_CLASSE# = #NOME_CLASSE#(#LISTA_ATRIBUTOS_CONSTRUTOR#)
+        return o#NOME_CLASSE#
+
+    def inicializa#NOME_CLASSE#BD(self,sBanco):
+        o#NOME_CLASSE#BD = #NOME_CLASSE#BD(sBanco)
+        return o#NOME_CLASSE#BD
+
+    def recupera#NOME_CLASSE#(self,#LISTA_ATRIBUTOS_CHAVE#, sBanco):
+        o#NOME_CLASSE#BD = self.inicializa#NOME_CLASSE#BD(sBanco)
+        o#NOME_CLASSE# = o#NOME_CLASSE#BD.recupera(#LISTA_ATRIBUTOS_CHAVE#)
+        return o#NOME_CLASSE#
+
+    def recuperaTodos#NOME_CLASSE#(self,sBanco, vWhere=None, vOrder=None):
+        o#NOME_CLASSE#BD = self.inicializa#NOME_CLASSE#BD(sBanco)
+        voObjeto = o#NOME_CLASSE#BD.recuperaTodos(vWhere, vOrder)
+        return voObjeto
+
+    def presente#NOME_CLASSE#(self,#LISTA_ATRIBUTOS_CHAVE#, sBanco):
+        o#NOME_CLASSE#BD = self.inicializa#NOME_CLASSE#BD(sBanco)
+        bResultado = o#NOME_CLASSE#BD.presente(#LISTA_ATRIBUTOS_CHAVE#)
+        return bResultado
+
+    def insere#NOME_CLASSE#(self,o#NOME_CLASSE#, voTransacao, sBanco):
+        o#NOME_CLASSE#BD = self.inicializa#NOME_CLASSE#BD(sBanco)
+        nId = o#NOME_CLASSE#BD.insere(o#NOME_CLASSE#)
+        if nId and voTransacao != None and hasattr(voTransacao,'__iter__'):
+            for oTransacao in voTransacao:
+                 if oTransacao != None and isinstance(oTransacao, object):
+                     if not oFachadaSeguranca.insereTransacao(oTransacao, sBanco):
+                         return False
+        if nId and voTransacao != None and not hasattr(voTransacao,'__iter__'):
+            if not oFachadaSeguranca.insereTransacao(voTransacao, sBanco):
+                return False
+        return nId
+
+    def altera#NOME_CLASSE#(self,o#NOME_CLASSE#, voTransacao, sBanco):
+        o#NOME_CLASSE#BD = self.inicializa#NOME_CLASSE#BD(sBanco)
+        bResultado = o#NOME_CLASSE#BD.altera(o#NOME_CLASSE#)
+        if bResultado and voTransacao != None and hasattr(voTransacao,'__iter__'):
+            for oTransacao in voTransacao:
+                 if oTransacao != None and isinstance(oTransacao, object):
+                     if not oFachadaSeguranca.insereTransacao(oTransacao, sBanco):
+                         return False
+        if bResultado and voTransacao != None and not hasattr(voTransacao,'__iter__'):
+            if not oFachadaSeguranca.insereTransacao(voTransacao, sBanco):
+                return False
+        return bResultado
+
+    def exclui#NOME_CLASSE#(self,#LISTA_ATRIBUTOS_CHAVE#, voTransacao, sBanco):
+        o#NOME_CLASSE#BD = self.inicializa#NOME_CLASSE#BD(sBanco)
+        bResultado = o#NOME_CLASSE#BD.exclui(#LISTA_ATRIBUTOS_CHAVE#)
+        if bResultado and voTransacao != None and hasattr(voTransacao,'__iter__'):
+            for oTransacao in voTransacao:
+                 if oTransacao != None and isinstance(oTransacao, object):
+                     if not oFachadaSeguranca.insereTransacao(oTransacao, sBanco):
+                         return False
+        if bResultado and voTransacao != None and not hasattr(voTransacao,'__iter__'):
+            if not oFachadaSeguranca.insereTransacao(voTransacao, sBanco):
+                return False
+        return bResultado
+
+    def desativa#NOME_CLASSE#(self,#LISTA_ATRIBUTOS_CHAVE#, voTransacao, sBanco):
+        o#NOME_CLASSE#BD = self.inicializa#NOME_CLASSE#BD(sBanco)
+        bResultado = o#NOME_CLASSE#BD.desativa(#LISTA_ATRIBUTOS_CHAVE#)
+        if bResultado and voTransacao != None and hasattr(voTransacao,'__iter__'):
+            for oTransacao in voTransacao:
+                 if oTransacao != None and isinstance(oTransacao, object):
+                     if not oFachadaSeguranca.insereTransacao(oTransacao, sBanco):
+                         return False
+        if bResultado and voTransacao != None and not hasattr(voTransacao,'__iter__'):
+            if not oFachadaSeguranca.insereTransacao(voTransacao, sBanco):
+                return False
+        return bResultado
+

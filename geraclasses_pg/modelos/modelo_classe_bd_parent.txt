@@ -1,0 +1,102 @@
+from classes.#NOME_CLASSE# import #NOME_CLASSE#
+from classes.Conexao import Conexao
+from datetime import datetime
+
+class #NOME_CLASSE#BDParent(Conexao):
+    def __init__(self, sBanco):
+        self.pConexao = Conexao(sServidor=sBanco)
+
+    def getConexao(self):
+        return Conexao.getConexao(self.pConexao)
+
+    def recupera(self, #LISTA_ATRIBUTOS_CHAVE#):
+        oConexao = self.getConexao()
+        sSql = f"select * from #NOME_TABELA# where #COMPARACAO_CHAVE_ATRIBUTO#"
+        oConexao.execute(sSql)
+        oReg = oConexao.fetchObject()
+        if oReg:
+            o#NOME_CLASSE# = #NOME_CLASSE#(#LISTA_CAMPOS_REG#)
+            vData = str(o#NOME_CLASSE#.getDtCadastro()).split(".")
+            data = datetime.strptime(vData[0] + '.000000', '%Y-%m-%d %H:%M:%S.%f')
+            dDataCadastro = data.strftime('%Y-%m-%d %H:%M:%S')
+            o#NOME_CLASSE#.setDtCadastro(dDataCadastro)
+            return o#NOME_CLASSE#
+        return None
+
+    def presente(self, #LISTA_ATRIBUTOS_CHAVE#):
+        oConexao = self.getConexao()
+        sSql = f"select #LISTA_CAMPOS_CHAVE# from #NOME_TABELA# where #COMPARACAO_CHAVE_ATRIBUTO#"
+        oConexao.execute(sSql)
+        oReg = oConexao.fetchObject()
+        if oReg:
+            return len(oReg) > 0
+        return 0
+
+    def insere(self, o#NOME_CLASSE#):
+        oConexao = self.getConexao()
+        vData = str(o#NOME_CLASSE#.getDtCadastro()).split(".")
+        data = datetime.strptime(vData[0] + '.000000', '%Y-%m-%d %H:%M:%S.%f')
+        dDataCadastro = data.strftime('%Y-%m-%d %H:%M:%S')
+        o#NOME_CLASSE#.setDtCadastro(dDataCadastro)
+        sSql = f"insert into #NOME_TABELA# (#LISTA_CAMPOS_NAO_CHAVE#) values (#VALORES_NAO_CHAVE#)"
+        oConexao.executeInsert(sSql)
+        nId = oConexao.getLastId()
+        if nId:
+            return nId
+        return oConexao.getConsulta()
+
+    def altera(self, o#NOME_CLASSE#):
+        oConexao = self.getConexao()
+        vData = str(o#NOME_CLASSE#.getDtCadastro()).split(".")
+        data = datetime.strptime(vData[0] + '.000000', '%Y-%m-%d %H:%M:%S.%f')
+        dDataCadastro = data.strftime('%Y-%m-%d %H:%M:%S')
+        o#NOME_CLASSE#.setDtCadastro(dDataCadastro)
+        sSql = f"update #NOME_TABELA# set #ATRIBUICAO_NAO_CHAVE# where #COMPARACAO_CHAVE_ATRIBUTO_ESP#"
+        oConexao.executeInsert(sSql)
+        return oConexao.getConsulta()
+
+    def recuperaTodos(self, vWhere, sOrder):
+        oConexao = self.getConexao()
+        if isinstance(vWhere, list) and len(vWhere) > 0:
+            sSql2 = ""
+            for sWhere in vWhere:
+                if sWhere != "":
+                    sSql2 += sWhere + " AND "
+            if sSql2 != "":
+                sSql = "SELECT * FROM #NOME_TABELA# WHERE "
+                sSql = (sSql + sSql2)[:-5]
+            else:
+                sSql = "SELECT * FROM #NOME_TABELA# "
+        else:
+            sSql = "SELECT * FROM #NOME_TABELA# "
+
+        if sOrder:
+            sSql += " ORDER BY " + sOrder
+
+        oConexao.execute(sSql)
+        voObjeto = []
+        while True:
+            oReg = oConexao.fetchObject()
+            if oReg != None:
+                o#NOME_CLASSE# = #NOME_CLASSE#(#LISTA_CAMPOS_REG#)
+                vData = str(o#NOME_CLASSE#.getDtCadastro()).split(".")
+                data = datetime.strptime(vData[0] + '.000000', '%Y-%m-%d %H:%M:%S.%f')
+                dDataCadastro = data.strftime('%Y-%m-%d %H:%M:%S')
+                o#NOME_CLASSE#.setDtCadastro(dDataCadastro)
+                voObjeto.append(o#NOME_CLASSE#)
+                del o#NOME_CLASSE#
+            else:
+                break
+        return voObjeto
+
+    def exclui(self, #LISTA_ATRIBUTOS_CHAVE#):
+        oConexao = self.getConexao()
+        sSql = f"delete from #NOME_TABELA# where #COMPARACAO_CHAVE_ATRIBUTO#"
+        oConexao.executeInsert(sSql)
+        return oConexao.getConsulta()
+
+    def desativa(self, #LISTA_ATRIBUTOS_CHAVE#):
+        oConexao = self.getConexao()
+        sSql = f"update #NOME_TABELA# set ativo = '0' where #COMPARACAO_CHAVE_ATRIBUTO#"
+        oConexao.executeInsert(sSql)
+        return oConexao.getConsulta()
